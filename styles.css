@@ -1,1 +1,43 @@
-/*  your css code here. If applicable */
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const checkbox = document.getElementById("checkbox");
+const submitBtn = document.getElementById("submit");
+const existingBtn = document.getElementById("existing");
+
+// Show "Login as existing user" button if credentials exist in localStorage
+if (localStorage.getItem("username") && localStorage.getItem("password")) {
+  existingBtn.style.display = "block";
+}
+
+// Submit button behavior
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const user = username.value;
+  const pass = password.value;
+
+  alert(`Logged in as ${user}`);
+
+  if (checkbox.checked) {
+    // store credentials
+    localStorage.setItem("username", user);
+    localStorage.setItem("password", pass);
+  } else {
+    // remove previously stored credentials
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+  }
+
+  // hide/show existing user button based on storage
+  if (localStorage.getItem("username")) {
+    existingBtn.style.display = "block";
+  } else {
+    existingBtn.style.display = "none";
+  }
+});
+
+// Login as existing user
+existingBtn.addEventListener("click", () => {
+  const savedUser = localStorage.getItem("username");
+  alert(`Logged in as ${savedUser}`);
+});
